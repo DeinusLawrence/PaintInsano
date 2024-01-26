@@ -42,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function Funcion_Grosor_Color(x, y) {
-        var halfThickness = Math.floor(GrosorTrazos / 2);
+        var Grosor = Math.floor(GrosorTrazos / 2);
 
-        for (var i = -halfThickness; i <= halfThickness; i++) {
-            for (var j = -halfThickness; j <= halfThickness; j++) {
+        for (var i = -Grosor; i <= Grosor; i++) {
+            for (var j = -Grosor; j <= Grosor; j++) {
                 ctx.fillStyle = ColorTrazos;
                 ctx.fillRect(x + i, y + j, 1, 1);
             }
@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
         drawing = false;  // Se desactiva la bandera de dibujo al soltar el botón del mouse
     });
 
+    // Algoritmo de Punto pendiente ordenado al origen
     function Algoritmo1(Inicio, Final) {
         // Formula: y = mx + b
     
