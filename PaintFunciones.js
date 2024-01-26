@@ -3,6 +3,8 @@ var PuntoInicio = null;
 var PuntoFinal = null;
 var ctx; 
 var Modo = "";
+
+
 var ColorTrazos = "#000000";
 var GrosorTrazos = 2;
 
@@ -28,9 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
     //Tamaño del canvas
     canvas.width = 1534;
     canvas.height = 650;
-    // canvas.width = window.innerWidth;
-    // canvas.height = window.innerHeight;
-
 
 
     //Obtener las cordenadas del cursor
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    function drawPixel(x, y) {
+    function Funcion_Grosor_Color(x, y) {
         var halfThickness = Math.floor(GrosorTrazos / 2);
 
         for (var i = -halfThickness; i <= halfThickness; i++) {
@@ -52,8 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }
-
-
 
 
     canvas.addEventListener("mousemove", function (event) {
@@ -72,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    
     canvas.addEventListener("mousedown", function (event) {
         if (Modo === "linea") {
             if (!PuntoInicio) {
@@ -107,91 +105,95 @@ document.addEventListener("DOMContentLoaded", function () {
         drawing = false;  // Se desactiva la bandera de dibujo al soltar el botón del mouse
     });
 
-    //y = mx + b (Pendiente ordenada al origen)
-    function Algoritmo(Inicio, Final) {
-
-        var dx = Final.x - Inicio.x;        // Delta x
-        var dy = Final.y - Inicio.y;        // Delta y
-
-        // Pendiente
+    function Algoritmo1(Inicio, Final) {
+        // Formula: y = mx + b
+    
+        // Calcular las diferencias en x e y
+        var dx = Final.x - Inicio.x;
+        var dy = Final.y - Inicio.y;
+    
+        // Calcular la pendiente
         var m = dy / dx;
-        var b = Inicio.y - m * Inicio.x;   // Ordenada en el origen
-
+    
         // Intercambiar los puntos para que siempre se dibuje de izquierda a derecha
         if (Inicio.x > Final.x) {
             var temp = Inicio;
             Inicio = Final;
             Final = temp;
         }
-
+    
         // Coordenada inicial
         var x = Inicio.x;
         var y = Inicio.y;
-
+    
         // Determinar el cuadrante
         var xIncrement, yIncrement;
-
+    
+        // Si la pendiente es menor o igual a 1
         if (Math.abs(m) <= 1) {
             xIncrement = 1;
             yIncrement = m;
-        } else {
+        } else { // Si la pendiente es mayor a 1
             xIncrement = 1 / Math.abs(m);
             yIncrement = m < 0 ? -1 : 1;
         }
-
-        //Dibujar los puntos intermedios
+    
+        // Dibujar los puntos intermedios
         while (x <= Final.x) {
-            drawPixel(Math.round(x), Math.round(y));
+            Funcion_Grosor_Color(Math.round(x), Math.round(y));
             x += xIncrement;
             y += yIncrement;
         }
-
+    
         // Pintar el punto final
-        drawPixel(Final.x, Final.y);
+        Funcion_Grosor_Color(Final.x, Final.y);
     }
 
-    //LINEA  BRESENHAM
-    function Algoritmo1(start, end) {
+    // Algoritmo de BRESENHAM
+    function Algoritmo(Inicio, Final) {
+        // Fórmulas P = 2Δy - Δx
+        // Si Pk < 0: (xk + 1, yk) y pk + 1 = pk + 2Δy
+        // Si pk > 0: (xk + 1, yk + 1) y pk + 1 = pk + 2Δy - 2Δx
 
-        var dx = Math.abs(end.x - start.x);
-        var dy = Math.abs(end.y - start.y);
-        
-        var sx = (start.x < end.x) ? 1 : -1; 
-        var sy = (start.y < end.y) ? 1 : -1;
+        // Calcular las diferencias en x e y
+        var dx = Math.abs(Final.x - Inicio.x);
+        var dy = Math.abs(Final.y - Inicio.y);
 
-        var err = dx - dy;
+        // Determinar la dirección de incremento/decremento en x e y
+        var sx = (Inicio.x < Final.x) ? 1 : -1;
+        var sy = (Inicio.y < Final.y) ? 1 : -1;
+
+        // Inicializar P, que se utiliza en el algoritmo
+        var P = dx - dy;
 
         while (true) {
+            // Dibujar el píxel en la posición actual
+            Funcion_Grosor_Color(Inicio.x, Inicio.y);
 
-            for (var i = 0; i < GrosorTrazos; i++) {
-                for (var j = 0; j < GrosorTrazos; j++) {
-                    ctx.fillStyle = ColorTrazos;
-                    ctx.fillRect(start.x + i, start.y + j, 1, 1);
-                }
-            }
-
-            if ((start.x === end.x) && (start.y === end.y)) {
+            // Se verificar si se alcanzó el punto final
+            if ((Inicio.x === Final.x) && (Inicio.y === Final.y)) {
                 break;
             }
 
-            var e2 = 2 * err;
+            // Calcular P2, una variable auxiliar que ayuda en la toma de decisiones
+            var P2 = 2 * P;
 
-
-            if (e2 > -dy) {
-                err -= dy;
-                start.x += sx;
+            // Actualizar P y las coordenadas según la condicion
+            if (P2 > -dy) {
+                P -= dy;
+                Inicio.x += sx;
             }
 
-            if (e2 < dx) {
-                err += dx;
-                start.y += sy;
+            if (P2 < dx) {
+                P += dx;
+                Inicio.y += sy;
             }
         }
     }
 
-    // DIGITAL DIFFERENTIAL ANALYZER
+    //Algoritmo DDA
     function Algoritmo3(Inicio, Final) {
-        // Algoritmo de DDA
+
 
         // Calcular la distancia entre los dos puntos
         var dx = Final.x - Inicio.x;
