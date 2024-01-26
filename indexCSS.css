@@ -26,12 +26,12 @@
 .toolbox img {
     width: 35px;
     height: 35px;
-    padding: 10px;
+    padding: 15px;
 }
 
 /* Hover */
 .toolbox img:hover {
-    background-color: #f1f1f1;
+    background-color: #D2B4DE;
     cursor: pointer;
     /* escalar */
     transform: scale(1.2);
