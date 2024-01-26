@@ -1,1 +1,1 @@
-"# PaintInsano" 
+"Como activar el modo insano" 
