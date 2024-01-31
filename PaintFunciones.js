@@ -1,4 +1,4 @@
-var ModosDisp = ["linea", "lapiz", "borrar","Cuadrado"];
+var ModosDisp = ["linea", "lapiz", "borrar","Cuadrado","Circulo"];
 var PuntoInicio = null;
 var PuntoFinal = null;
 var ctx; 
@@ -21,7 +21,33 @@ document.addEventListener("DOMContentLoaded", function () {
     var canvas = document.getElementById("myCanvas");
     var drawing = false; 
     ctx = canvas.getContext("2d");  // Asignar el contexto global aquí
+    var valxy = [0, 0, 0, 0];
 
+    var selectedRadio = document.querySelector('input[name="s"]:checked');    
+    var radioButtons = document.querySelectorAll('input[name="s"]');
+  
+    radioButtons.forEach(function (radio) {
+      radio.addEventListener('change', function () {
+          selectedRadio = document.querySelector('input[name="s"]:checked');
+      });
+    });
+
+    //Primeras coordenadas al dar clik
+    canvas.addEventListener("mousedown", function (e) {
+      var x1 = parseInt( e.clientX - canvas.getBoundingClientRect().left);
+      var y1 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
+      valxy[0]= x1;
+      valxy[1]= y1;
+    });
+  
+    //Segundas coordenadas al soltar clik
+    canvas.addEventListener("mouseup", function (e) {
+        var x2 = parseInt(e.clientX - canvas.getBoundingClientRect().left);
+        var y2 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
+        valxy[2]= x2;
+        valxy[3]= y2;
+        fun();
+    });
 
     // Configurar color y grosor iniciales
     ctx.strokeStyle = ColorTrazos;
@@ -62,9 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.stroke();
             } else if (Modo === "borrar" && drawing) {
                 ctx.clearRect(coordenadas.x - 10, coordenadas.y - 10, 30, 30);
-            }else if( Modo === "Cuadrado" && drawing ){
-                
-
             }
         }
     });
@@ -91,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 PuntoFinal = null;
             }
 
-        } else if (ModosDisp.includes(Modo)) {
+        }else if (ModosDisp.includes(Modo)) {
             if (Modo === "lapiz" || Modo === "borrar") {
                 ctx.beginPath();
                 var coordenadas = obtenerCoordenadas(event);
@@ -100,6 +123,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
+
+    function fun() {
+        if (selectedRadio) {
+            switch (selectedRadio.id) {
+                case "circulo":
+                  Circulo();
+                default:
+                    break;
+            }
+        }
+    }
 
     canvas.addEventListener("mouseup", function () {
         drawing = false;  // Se desactiva la bandera de dibujo al soltar el botón del mouse
@@ -255,4 +289,37 @@ document.addEventListener("DOMContentLoaded", function () {
         Algoritmo3(cuadradoEnd, { x: cuadradoStart.x, y: cuadradoEnd.y });
         Algoritmo3({ x: cuadradoStart.x, y: cuadradoEnd.y }, cuadradoStart);
     }
+
+    function Circulo() {
+        var x1, y1, x2, y2;
+        x1 = valxy[0];
+        y1 = valxy[1];
+        x2 = valxy[2];
+        y2 = valxy[3];
+      
+        let radio = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        let x = radio;
+        let y = 0;
+        let P = 1 - radio;
+      
+        while (x > y) {
+            ctx.fillRect(x1 + x, y1 - y, 1, 1);
+            ctx.fillRect(x1 - x, y1 - y, 1, 1);
+            ctx.fillRect(x1 + x, y1 + y, 1, 1);
+            ctx.fillRect(x1 - x, y1 + y, 1, 1);
+            ctx.fillRect(x1 + y, y1 - x, 1, 1);
+            ctx.fillRect(x1 - y, y1 - x, 1, 1);
+            ctx.fillRect(x1 + y, y1 + x, 1, 1);
+            ctx.fillRect(x1 - y, y1 + x, 1, 1);
+            y++;
+      
+            if (P <= 0) {
+                P = P + 2 * y + 1;
+            } else {
+                x--;
+                P = P + 2 * y - 2 * x + 1;
+            }
+        }
+      }
+
 });
