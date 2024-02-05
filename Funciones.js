@@ -2,30 +2,31 @@
 document.addEventListener("DOMContentLoaded", function () {
     
     //Declaracion de el lienso y el formato 2d
-    var canvas = document.getElementById("lienso");
+    var canvas = document.getElementById("Pizarra");
     var ctx = canvas.getContext("2d");
     var Coordenadas = [0, 0, 0, 0];
+
     var Seleccionar_Figura = document.querySelector('input[name="Formas"]:checked');    
     var RadioButton = document.querySelectorAll('input[name="Formas"]');
 
     //Tamaño del canvas
     canvas.width = 1500;
     canvas.height = 650;
-  
+
     RadioButton.forEach(function (radio) {
-      radio.addEventListener('change', function () {
-          Seleccionar_Figura = document.querySelector('input[name="Formas"]:checked');
-      });
+        radio.addEventListener('change', function () {
+            Seleccionar_Figura = document.querySelector('input[name="Formas"]:checked');
+        });
     });
-  
+
     //Primeras coordenadas al dar clik
     canvas.addEventListener("mousedown", function (e) {
-      var X1 = parseInt( e.clientX - canvas.getBoundingClientRect().left);
-      var Y1 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
-      Coordenadas[0]= X1;
-      Coordenadas[1]= Y1;
+        var X1 = parseInt( e.clientX - canvas.getBoundingClientRect().left);
+        var Y1 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
+        Coordenadas[0]= X1;
+        Coordenadas[1]= Y1;
     });
-  
+
     //Segundas coordenadas al soltar clik
     canvas.addEventListener("mouseup", function (e) {
         var X2 = parseInt(e.clientX - canvas.getBoundingClientRect().left);
@@ -39,6 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
     function Figura() {
         if (Seleccionar_Figura) {
             switch (Seleccionar_Figura.id) {
+                case "Limpiar":
+                    borrarCanvas(ctx);
+                    break;
                 case "Linea":
                     //Algoritmo Punto Pendiente
                     Linea_Algoritmo1();
@@ -55,6 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }
+
+    function borrarCanvas(ctx) {
+        // Borra el lienzo completo
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+
 
     //Punto Pendiente-----------------------------------------------------------------------------------
     function Linea_Algoritmo1() {
