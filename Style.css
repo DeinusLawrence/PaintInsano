@@ -1,0 +1,18 @@
+body{
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom right, #ffb6c1, #ffc0cb);
+}
+
+canvas{
+    background-color: white;
+    border-radius: 15px;
+    margin-left: 0.5%;
+}
+
+.Figuras {
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}

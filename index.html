@@ -1,43 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>PaintInsano</title>
-    <link rel="stylesheet" href="indexCSS.css">
+    <title>Paint Insano</title>
 </head>
+<script src="Funciones.js"></script>
+<link rel="stylesheet"  href="Style.css">
 <body>
-    <div class="container">
-        <div class="toolbox">
-            <!-- Lapiz -->
-            <div class="tool" id="lapiz">
-                <img src="img/Lapiz.png" onclick="CambiarModo('lapiz')" alt="Lapiz">
-            </div>
-            <!-- Borrador -->
-            <div class="tool" id="borrador">
-                <img src="img/Borrador.png" onclick="CambiarModo('borrar')"  alt="Borrador">
-            </div>
-            <!-- Linea -->
-            <div class="tool" id="Linea">
-                <img src="img/Linea.png" onclick="CambiarModo('linea')" alt="Linea">
-            </div>
-            <!-- Cuadrado -->
-            <div class="tool" id="cuadrado">
-                <img src="img/Cuadrado.png" onclick="CambiarModo('Cuadrado')"  alt="Cuadrado">
-            </div>
-
-            <!-- Circulo -->
-            <div class="tool" id="Circulo">
-                <label for="circulo">
-                    <img src="img/Circulo.png" alt="Circulo">
-                </label>
-            </div>
-            <input type="radio" name="s" id="circulo">
-
+    <form class="Figuras">
+        <div>
+            <label>
+                <input type="radio" name="Formas" id="Linea" checked>
+                Linea
+            </label>
+            <label>
+                <input type="radio" name="Formas" id="Cuadro">
+                Cuadro
+            </label>
+            <label>
+                <input type="radio" name="Formas" id="Circulo">
+                Circulo
+            </label>
         </div>
-
-        <canvas id="myCanvas" class="canvas"></canvas>
-    </div>
-
-    <script src="PaintFunciones.js"></script>
+    </form>
+<canvas id="lienso" class="canvas"> </canvas>
 </body>
 </html>
