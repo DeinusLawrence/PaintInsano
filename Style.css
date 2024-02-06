@@ -16,3 +16,7 @@ canvas{
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+.form-control {
+    width: 7%;
+}

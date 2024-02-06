@@ -1,6 +1,6 @@
 //Inicio del script
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     //Declaracion de el lienso y el formato 2d
     var canvas = document.getElementById("Pizarra");
     var ctx = canvas.getContext("2d");
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     break;
                 case "Linea":
                     //Algoritmo Punto Pendiente
-                    Linea_Algoritmo1();
+                    Linea_Algoritmo3();
                     break;
                 case "Cuadro":
                     //Algoritmo para crear un cuadrado
@@ -54,11 +54,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 case "Circulo":
                     //Algoritmo para crear un circulo
                     Circulo();
+                    break;
+                case "Poligono":
+                    //Poligonos
+                    Poligono();
+                    break;
                 default:
                     break;
             }
         }
     }
+
 
     function borrarCanvas(ctx) {
         // Borra el lienzo completo
@@ -217,6 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
     //Cuadrado-----------------------------------------------------------------------------------
     function Cuadrado(){
         var X = Coordenadas[0];
@@ -232,6 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         
     }
+
 
     //Circulo-----------------------------------------------------------------------------------
     function Circulo() {
@@ -266,4 +274,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
+    function Poligono() {
+        var X1, Y1, X2, Y2;
+        X1 = Coordenadas[0];
+        Y1 = Coordenadas[1];
+        X2 = Coordenadas[2];
+        Y2 = Coordenadas[3];
+        var X = X1;
+        var Y = Y1;
+        let radio = Math.sqrt(Math.pow(X2 - X1, 2) + Math.pow(Y2 - Y1, 2));
+        var num = parseInt(document.getElementById("Lados").value);
+        var angulo = Math.PI * 2 / num;
+
+            for (let i = 1; i <= num; i++) {
+                X1 = X + radio * Math.cos(angulo * i);
+                Y1 = Y + radio * Math.sin(angulo * i);
+                X2 = X + radio * Math.cos(angulo * (i + 1));
+                Y2 = Y + radio * Math.sin(angulo * (i + 1));
+
+                Coordenadas[0] = X1;
+                Coordenadas[1] = Y1;
+                Coordenadas[2] = X2;
+                Coordenadas[3] = Y2;
+                Linea_Algoritmo3();
+            }
+    }
 });
