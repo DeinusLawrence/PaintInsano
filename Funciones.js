@@ -1,25 +1,29 @@
-//Inicio del script
 document.addEventListener("DOMContentLoaded", function () {
 
-    //Declaracion de el lienso y el formato 2d
+    //Declaracion del pizarron y el formato 2d-----------------------------------------------------------------
     var canvas = document.getElementById("Pizarra");
     var ctx = canvas.getContext("2d");
     var Coordenadas = [0, 0, 0, 0];
 
+
     var Seleccionar_Figura = document.querySelector('input[name="Formas"]:checked');    
     var RadioButton = document.querySelectorAll('input[name="Formas"]');
 
-    //Tamaño del canvas
+
+    //Tamaño del canvas----------------------------------------------------------------------------------------
     canvas.width = 1500;
     canvas.height = 650;
 
+
+    //Funcion para ver que figura esa seleccionada-------------------------------------------------------------
     RadioButton.forEach(function (radio) {
         radio.addEventListener('change', function () {
             Seleccionar_Figura = document.querySelector('input[name="Formas"]:checked');
         });
     });
 
-    //Primeras coordenadas al dar clik
+
+    //Primeras coordenadas al dar clik-------------------------------------------------------------------------
     canvas.addEventListener("mousedown", function (e) {
         var X1 = parseInt( e.clientX - canvas.getBoundingClientRect().left);
         var Y1 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
@@ -27,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
         Coordenadas[1]= Y1;
     });
 
-    //Segundas coordenadas al soltar clik
+
+    //Segundas coordenadas al soltar clik----------------------------------------------------------------------
     canvas.addEventListener("mouseup", function (e) {
         var X2 = parseInt(e.clientX - canvas.getBoundingClientRect().left);
         var Y2 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
@@ -36,11 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
         Figura();
     });
 
-    //Funcion para escojer una figura
+
+    //Funcion para escojer una figura--------------------------------------------------------------------------
     function Figura() {
         if (Seleccionar_Figura) {
             switch (Seleccionar_Figura.id) {
                 case "Limpiar":
+                    //Funcion para limpiar la pantalla
                     borrarCanvas(ctx);
                     break;
                 case "Linea":
@@ -56,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     Circulo();
                     break;
                 case "Poligono":
-                    //Poligonos
+                    //Algoritmo para Poligonos
                     Poligono();
                     break;
                 default:
@@ -66,13 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    //Funcion Limpiar Pizarron---------------------------------------------------------------------------------
     function borrarCanvas(ctx) {
         // Borra el lienzo completo
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
 
 
-    //Punto Pendiente-----------------------------------------------------------------------------------
+    //Punto Pendiente------------------------------------------------------------------------------------------
     function Linea_Algoritmo1() {
         var Y = 0;
         var X = 0;
@@ -190,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    //Algoritmo DDA-----------------------------------------------------------------------------------
+    //Algoritmo DDA--------------------------------------------------------------------------------------------
     function Linea_Algoritmo3() {
         var X1, X2, Y1, Y2;
         X1 = Coordenadas[0];
@@ -204,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let Dx= X2 - X1;
         let Dy = Y2 - Y1;
 
-        if (Math.abs(Dx) > Math.abs(Dy)) {
+        if (Math.abs(Dx) >= Math.abs(Dy)) {
             S = Math.abs(Dx);
-        } else if (Math.abs(Dx) < Math.abs(Dy)) {
+        } else if (Math.abs(Dx) <= Math.abs(Dy)) {
             S = Math.abs(Dy);
         }
 
@@ -224,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    //Cuadrado-----------------------------------------------------------------------------------
+    //Cuadrado-------------------------------------------------------------------------------------------------
     function Cuadrado(){
         var X = Coordenadas[0];
         var Y = Coordenadas[1];
@@ -241,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    //Circulo-----------------------------------------------------------------------------------
+    //Circulo--------------------------------------------------------------------------------------------------
     function Circulo() {
         var X1, Y1, X2, Y2;
         X1 = Coordenadas[0];
@@ -275,6 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    //Poligono-------------------------------------------------------------------------------------------------
     function Poligono() {
         var X1, Y1, X2, Y2;
         X1 = Coordenadas[0];
@@ -300,4 +309,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 Linea_Algoritmo3();
             }
     }
+
+
 });
