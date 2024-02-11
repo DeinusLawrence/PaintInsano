@@ -9,30 +9,38 @@
 <body>
     <form class="Figuras">
         <div>
-            <label>
+            <label for="Limpiar" class="radio-label">
                 <input type="radio" name="Formas" id="Limpiar" checked>
-                Limpiar 
+                <img src="img/Borrador.png"> 
             </label>
-            <label>
-                <input type="radio" name="Formas" id="Linea" checked>
-                Linea
+
+            <label for="Linea" class="radio-label">
+                <input type="radio" name="Formas" id="Linea">
+                <img src="img/Linea.png">
             </label>
-            <label>
+
+            <label for="Cuadro" class="radio-label">
                 <input type="radio" name="Formas" id="Cuadro">
-                Cuadro
+                <img src="img/Cuadrado.png">
             </label>
-            <label>
+
+            <label for="Circulo" class="radio-label">
                 <input type="radio" name="Formas" id="Circulo">
-                Circulo
+                <img src="img/Circulo.png">
             </label>
-            <label>
+
+            <label for="Poligono" class="radio-label" style="width: 9.5%;">
                 <input type="radio" name="Formas" id="Poligono">
-                Poligono
+                <img src="img/Poligono.png">
                 <input type="text" id="Lados" class="form-control" placeholder="Lados">
+            </label>
+            
+            <label for="Elipse" class="radio-label">
+                <input type="radio" name="Formas" id="Elipse">
+                <img src="img/Elipse.png">
             </label>
         </div>
     </form>
     <canvas id="Pizarra" class="canvas"> </canvas>
 </body>
-
 </html>

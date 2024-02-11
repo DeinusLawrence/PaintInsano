@@ -66,6 +66,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     //Algoritmo para Poligonos
                     Poligono();
                     break;
+                case "Elipse":
+                    //Algoritmo para Elipse
+                    Elipse();
+                    break;
                 default:
                     break;
             }
@@ -308,6 +312,53 @@ document.addEventListener("DOMContentLoaded", function () {
                 Coordenadas[3] = Y2;
                 Linea_Algoritmo3();
             }
+    }
+
+
+    function  Elipse() {
+        var X1, Y1, X2, Y2;
+        X1 = Coordenadas[0];
+        Y1 = Coordenadas[1];
+        X2 = Coordenadas[2];
+        Y2 = Coordenadas[3];
+
+        var A = Math.abs(X2 - X1);
+        var B = Math.abs(Y2 - Y1);
+        var B1 = B & 1;
+        var Dx = 4 * (1 - A) * B * B;
+        var Dy = 4 * (B1 + 1) * A * A;
+        var Err = Dx + Dy + B1 * A * A;
+        var E2;
+        
+
+        if (X1 > X2) {
+            X1 = X2;
+            X2 += A;
+        }
+        if (Y1 > Y2)
+            Y1 = Y2;
+        Y1 += (B + 1) / 2;
+        Y2 = Y1 - B1;
+        A *= 8 * A;
+        B1 = 8 * B * B;
+
+        do {
+        ctx.fillRect(X2, Y1, 1, 1);
+        ctx.fillRect(X1, Y1, 1, 1); 
+        ctx.fillRect(X1, Y2, 1, 1); 
+        ctx.fillRect(X2, Y2, 1, 1); 
+            E2 = 2 * Err;
+            if (E2 <= Dy) {
+                Y1++;
+                Y2--;
+                Err += Dy += A;
+            } /* y step */
+            if (E2 >= Dx || 2 * Err > Dy) {
+                X1++;
+                X2--;
+                Err += Dx += B1;
+            } /* x step */
+        } while (X1 <= X2);
     }
 
 
