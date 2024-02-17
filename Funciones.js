@@ -5,26 +5,34 @@ document.addEventListener("DOMContentLoaded", function () {
     var ctx = canvas.getContext("2d");
     var Coordenadas = [0, 0, 0, 0];
 
-
-    var Seleccionar_Figura = document.querySelector('input[name="Formas"]:checked');    
-    var RadioButton = document.querySelectorAll('input[name="Formas"]');
-
-
     //Tamaño del canvas----------------------------------------------------------------------------------------
     canvas.width = 1500;
     canvas.height = 650;
 
 
     //Funcion para ver que figura esa seleccionada-------------------------------------------------------------
-    RadioButton.forEach(function (radio) {
-        radio.addEventListener('change', function () {
-            Seleccionar_Figura = document.querySelector('input[name="Formas"]:checked');
+    var Seleccionar_Figura = null;
+    var Figura_Elegida = document.querySelectorAll('.Boton_Seleccion');
+    var Grosor = document.getElementById("Grosor");
+    var Movimiento = false;
+
+    //Elegir Figura--------------------------------------------------------------------------------------------
+    Figura_Elegida.forEach(function (button) {
+        button.addEventListener('click', function () {
+            button.classList.add('selected');
+            Figura_Elegida.forEach(function (otherButton) {
+                if (otherButton !== button) {
+                    otherButton.classList.remove('selected');
+                }
+            });
+            Seleccionar_Figura = button;
         });
     });
 
 
     //Primeras coordenadas al dar clik-------------------------------------------------------------------------
     canvas.addEventListener("mousedown", function (e) {
+        Movimiento = true;
         var X1 = parseInt( e.clientX - canvas.getBoundingClientRect().left);
         var Y1 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
         Coordenadas[0]= X1;
@@ -34,21 +42,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Segundas coordenadas al soltar clik----------------------------------------------------------------------
     canvas.addEventListener("mouseup", function (e) {
-        var X2 = parseInt(e.clientX - canvas.getBoundingClientRect().left);
-        var Y2 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
-        Coordenadas[2]= X2;
-        Coordenadas[3]= Y2;
-        Figura();
+        Movimiento = false;
+            var X2 = parseInt(e.clientX - canvas.getBoundingClientRect().left);
+            var Y2 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
+            Coordenadas[2]= X2;
+            Coordenadas[3]= Y2;
+            Figura();
     });
+
+
+    canvas.addEventListener("mousemove", function (e) {
+        if (Movimiento == true && Seleccionar_Figura.id == "Lapiz") {
+            var Contorno = Grosor.value;
+            ctx.lineWidth = Contorno;
+            var Code_Color = document.getElementById('Color');
+            var Aplic_Color = Code_Color.value;
+            ctx.strokeStyle = Aplic_Color; 
+            var x2 = parseInt(e.clientX - canvas.getBoundingClientRect().left);
+            var y2 = parseInt(e.clientY - canvas.getBoundingClientRect().top);
+            ctx.beginPath();
+            ctx.moveTo(Coordenadas[0], Coordenadas[1]);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            Coordenadas[0] = x2;
+            Coordenadas[1] = y2;
+        }
+    });
+
+
+    //Funcion para elegir color--------------------------------------------------------------------------------
+    function ColorContorno(){
+        var Codigo_Color = document.getElementById('Color');
+         var Aplicar_Color = Codigo_Color.value;
+     ctx.fillStyle = Aplicar_Color;
+     }
 
 
     //Funcion para escojer una figura--------------------------------------------------------------------------
     function Figura() {
         if (Seleccionar_Figura) {
             switch (Seleccionar_Figura.id) {
+                case "Lapiz":
+                    //Lapiz
+                    Lapiz();
+                    break;
                 case "Limpiar":
-                    //Funcion para limpiar la pantalla
-                    borrarCanvas(ctx);
+                    BorrarCanvas(ctx)
                     break;
                 case "Linea":
                     //Algoritmo Punto Pendiente
@@ -76,9 +115,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    //Funcion Lapiz -------------------------------------------------------------------------------------------
+    function Lapiz() {
+        ColorContorno();
+        var Contorno = Grosor.value;
+    }
 
     //Funcion Limpiar Pizarron---------------------------------------------------------------------------------
-    function borrarCanvas(ctx) {
+    function BorrarCanvas(ctx) {
         // Borra el lienzo completo
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
@@ -90,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var X = 0;
         var M = 0;
 
+        ColorContorno();
         //Invierte las coordenadas si x2 es menor que x1
         if (Coordenadas[2] < Coordenadas[0]) {
             var temp = Coordenadas[0];
@@ -145,11 +190,14 @@ document.addEventListener("DOMContentLoaded", function () {
             } 
         }
         Coordenadas = [0, 0, 0, 0]
+        
     }
 
 
     //Algoritmo de Bresenham-----------------------------------------------------------------------------------
     function Linea_Algoritmo2(){
+        ColorContorno();
+
         var Dy = (Coordenadas[3] - Coordenadas[1]);
         var Dx = (Coordenadas[2] - Coordenadas[0]);
         let Start_Xr, Start_Yr;
@@ -204,6 +252,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Algoritmo DDA--------------------------------------------------------------------------------------------
     function Linea_Algoritmo3() {
+        ColorContorno();
+        var Contorno = Grosor.value;
         var X1, X2, Y1, Y2;
         X1 = Coordenadas[0];
         Y1 = Coordenadas[1];
@@ -231,13 +281,14 @@ document.addEventListener("DOMContentLoaded", function () {
         for (var St = 1; St <= S; St++) {
             PX += AX;
             PY += AY;
-            ctx.fillRect(PX, PY, 1, 1);
+            ctx.fillRect(PX, PY, Contorno, Contorno);
         }
     }
 
 
     //Cuadrado-------------------------------------------------------------------------------------------------
     function Cuadrado(){
+        ColorContorno();
         var X = Coordenadas[0];
         var Y = Coordenadas[1];
         var Lado_x = Math.abs(Coordenadas[2] - Coordenadas[0]); // Calcula la longitud del lado del cuadrado
@@ -255,6 +306,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Circulo--------------------------------------------------------------------------------------------------
     function Circulo() {
+        ColorContorno();
+        var Contorno = Grosor.value;
         var X1, Y1, X2, Y2;
         X1 = Coordenadas[0];
         Y1 = Coordenadas[1];
@@ -267,14 +320,14 @@ document.addEventListener("DOMContentLoaded", function () {
         let P = 1 - Radio;
 
         while (X > Y) {
-            ctx.fillRect(X1 + X, Y1 - Y, 1, 1);
-            ctx.fillRect(X1 - X, Y1 - Y, 1, 1);
-            ctx.fillRect(X1 + X, Y1 + Y, 1, 1);
-            ctx.fillRect(X1 - X, Y1 + Y, 1, 1);
-            ctx.fillRect(X1 + Y, Y1 - X, 1, 1);
-            ctx.fillRect(X1 - Y, Y1 - X, 1, 1);
-            ctx.fillRect(X1 + Y, Y1 + X, 1, 1);
-            ctx.fillRect(X1 - Y, Y1 + X, 1, 1);
+            ctx.fillRect(X1 + X, Y1 - Y, Contorno, Contorno);
+            ctx.fillRect(X1 - X, Y1 - Y, Contorno, Contorno);
+            ctx.fillRect(X1 + X, Y1 + Y, Contorno, Contorno);
+            ctx.fillRect(X1 - X, Y1 + Y, Contorno, Contorno);
+            ctx.fillRect(X1 + Y, Y1 - X, Contorno, Contorno);
+            ctx.fillRect(X1 - Y, Y1 - X, Contorno, Contorno);
+            ctx.fillRect(X1 + Y, Y1 + X, Contorno, Contorno);
+            ctx.fillRect(X1 - Y, Y1 + X, Contorno, Contorno);
             Y++;
 
             if (P <= 0) {
@@ -289,6 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Poligono-------------------------------------------------------------------------------------------------
     function Poligono() {
+        ColorContorno();
         var X1, Y1, X2, Y2;
         X1 = Coordenadas[0];
         Y1 = Coordenadas[1];
@@ -316,6 +370,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function  Elipse() {
+        ColorContorno();
+        var Contorno = Grosor.value;
         var X1, Y1, X2, Y2;
         X1 = Coordenadas[0];
         Y1 = Coordenadas[1];
@@ -343,10 +399,10 @@ document.addEventListener("DOMContentLoaded", function () {
         B1 = 8 * B * B;
 
         do {
-        ctx.fillRect(X2, Y1, 1, 1);
-        ctx.fillRect(X1, Y1, 1, 1); 
-        ctx.fillRect(X1, Y2, 1, 1); 
-        ctx.fillRect(X2, Y2, 1, 1); 
+        ctx.fillRect(X2, Y1, Contorno, Contorno);
+        ctx.fillRect(X1, Y1, Contorno, Contorno); 
+        ctx.fillRect(X1, Y2, Contorno, Contorno); 
+        ctx.fillRect(X2, Y2, Contorno, Contorno); 
             E2 = 2 * Err;
             if (E2 <= Dy) {
                 Y1++;

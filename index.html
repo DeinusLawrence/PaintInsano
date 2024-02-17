@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Paint Insano</title>
+    <title>Paint Nerfeado</title>
 </head>
 <script src="Funciones.js"></script>
 <link rel="stylesheet"  href="Style.css">
 
 <body>
-    <form class="Figuras">
-        <div>
-            <label for="Limpiar" class="radio-label">
-                <input type="radio" name="Formas" id="Limpiar" checked>
-                <img src="img/Borrador.png"> 
-            </label>
+        <div class="Figuras">
 
-            <label for="Linea" class="radio-label">
-                <input type="radio" name="Formas" id="Linea">
+            <button id="Lapiz" class="Boton_Seleccion">
+                <img src="img/Lapiz.png"> 
+            </button>
+
+            <button id="Limpiar" class="Boton_Seleccion">
+                <img src="img/Borrador.png">
+            </button>
+
+            <button id="Linea" class="Boton_Seleccion">
                 <img src="img/Linea.png">
-            </label>
+            </button>
 
-            <label for="Cuadro" class="radio-label">
-                <input type="radio" name="Formas" id="Cuadro">
+            <button id="Cuadro" class="Boton_Seleccion">
                 <img src="img/Cuadrado.png">
-            </label>
+            </button>
 
-            <label for="Circulo" class="radio-label">
-                <input type="radio" name="Formas" id="Circulo">
+            <button id="Circulo" class="Boton_Seleccion">
                 <img src="img/Circulo.png">
-            </label>
+            </button>
 
-            <label for="Poligono" class="radio-label" style="width: 9.5%;">
-                <input type="radio" name="Formas" id="Poligono">
+            <button id="Poligono" class="Boton_Seleccion" style="width: 10%;">
                 <img src="img/Poligono.png">
                 <input type="text" id="Lados" class="form-control" placeholder="Lados">
-            </label>
+            </button>
             
-            <label for="Elipse" class="radio-label">
-                <input type="radio" name="Formas" id="Elipse">
+            <button id="Elipse" class="Boton_Seleccion">
                 <img src="img/Elipse.png">
-            </label>
+            </button>
+
+            <input type="color" id="Color" value="#000000">
+            <input type="range" id="Grosor" min="1" max="6" value="1">
+
+            <button id="Relleno" class="Boton_Seleccion">
+                <img src="img/Relleno.png">
+            </button>
+
         </div>
-    </form>
     <canvas id="Pizarra" class="canvas"> </canvas>
 </body>
 </html>
