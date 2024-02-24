@@ -109,6 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     //Algoritmo para Elipse
                     Elipse();
                     break;
+                case "Optima":
+                    //Algoritmo para saber cual linea es mejor
+                    Linea_Optima();
+                    break;
                 default:
                     break;
             }
@@ -418,4 +422,57 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    function Linea_Optima() {
+
+        const inicio = performance.now();
+        //Lineas verticales izquierda a derecha
+        for (let i = 0; i <= 1000; i++) {
+            Coordenadas[0] = 0;
+            Coordenadas[1] = i;
+            Coordenadas[2] = 1500;
+            Coordenadas[3] = i;
+            Linea_Algoritmo1();
+        }
+        //Lineas verticales derecha a izquierda
+        for (let i = 1000; i >= 0; i--) {
+            Coordenadas[0] = 1500;
+            Coordenadas[1] = i;
+            Coordenadas[2] = 0;
+            Coordenadas[3] = i;
+            Linea_Algoritmo1();
+        }
+        
+        //Lineas horizontales abajo hacia abajo
+        for (let i = 0; i <= 1000; i++) {
+            Coordenadas[0] = i;
+            Coordenadas[1] = 0;
+            Coordenadas[2] = i;
+            Coordenadas[3] = 1500;
+            Linea_Algoritmo1();
+        }
+        //Lineas horizontales abajo hacia arriba
+        for (let i = 1000; i >= 0; i--) {
+            Coordenadas[0] = i;
+            Coordenadas[1] = 1500;
+            Coordenadas[2] = i;
+            Coordenadas[3] = 0;
+            Linea_Algoritmo3();
+        }
+        
+        for (let i = 0; i <= 1000; i++) {
+            Coordenadas[0] = i;
+            Coordenadas[1] = i;
+            Coordenadas[2] = i;
+            Coordenadas[3] = i;
+            Linea_Algoritmo1();
+        }
+        
+        for (let i = 0; i <= 1000; i++) {
+            Coordenadas[0] = 1500 - i;
+            Coordenadas[1] = i;
+            Coordenadas[2] = 1500 - i;
+            Coordenadas[3] = i;
+            Linea_Algoritmo1();
+        }
+    }
 });
