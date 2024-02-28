@@ -256,16 +256,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Algoritmo DDA--------------------------------------------------------------------------------------------
     function Linea_Algoritmo3() {
+        
         ColorContorno();
         var Contorno = Grosor.value;
         var X1, X2, Y1, Y2;
+        var S;
+        var AX;
+        var AY;
         X1 = Coordenadas[0];
         Y1 = Coordenadas[1];
         X2 = Coordenadas[2];
         Y2 = Coordenadas[3];
-        var S;
-        var AX;
-        var AY;
 
         let Dx= X2 - X1;
         let Dy = Y2 - Y1;
@@ -474,5 +475,17 @@ document.addEventListener("DOMContentLoaded", function () {
             Coordenadas[3] = i;
             Linea_Algoritmo1();
         }
+    }
+
+
+    //Funcion Guardar -----------------------------------------------------------------------------------------
+    function Guardar() {
+
+    }
+
+
+    //Funcion control z ---------------------------------------------------------------------------------------
+    function Control_Z() {
+
     }
 });
