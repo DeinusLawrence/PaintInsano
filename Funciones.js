@@ -374,6 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+     //Elipse--------------------------------------------------------------------------------------------------
     function  Elipse() {
         ColorContorno();
         var Contorno = Grosor.value;
@@ -423,6 +424,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+     //Linea Optima--------------------------------------------------------------------------------------------
     function Linea_Optima() {
 
         const inicio = performance.now();
@@ -488,4 +490,21 @@ document.addEventListener("DOMContentLoaded", function () {
     function Control_Z() {
 
     }
+
+    //Funcion Rectangulo --------------------------------------------------------------------------------------
+    function Rectangulo() {
+
+    }
+
+    //Funcion Trapecio ----------------------------------------------------------------------------------------
+    function Trapecio() {
+
+    }
+
+
+    //Funcion Texto -------------------------------------------------------------------------------------------
+    function Texto() {
+
+    }
+
 });
