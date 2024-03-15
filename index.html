@@ -1,69 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paint Nerfeado</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
-<script src="Funciones.js"></script>
-<link rel="stylesheet"  href="Style.css">
 
 <body>
-        <div class="Figuras">
-
-            <button id="Lapiz" class="Boton_Seleccion">
-                <img src="img/Lapiz.png"> 
-            </button>
-
-            <button id="Limpiar" class="Boton_Seleccion">
-                <img src="img/Borrador.png">
-            </button>
-
-            <button id="Linea" class="Boton_Seleccion">
-                <img src="img/Linea.png">
-            </button>
-
-            <button id="Cuadro" class="Boton_Seleccion">
-                <img src="img/Cuadrado.png">
-            </button>
-
-            <button id="Rectangulo" class="Boton_Seleccion">
-                <img src="img/Rectangulo.png">
-            </button>
-
-            <button id="Circulo" class="Boton_Seleccion">
-                <img src="img/Circulo.png">
-            </button>
-
-            <button id="Rectangulo" class="Boton_Seleccion">
-                <img src="img/Elipse.png">
-            </button>
-
-            <button id="Trapecio" class="Boton_Seleccion">
-                <img src="img/Trapecio.png">
-            </button>
-
-            <button id="Texto" class="Boton_Seleccion">
-                <img src="img/Texto.png">
-            </button>
-
-            <button id="Poligono" class="Boton_Seleccion" style="width: 10%;">
-                <img src="img/Poligono.png">
-                <input type="text" id="Lados" class="form-control" placeholder="Lados">
-            </button>
+    <!--Botones de herramientas-->
+    <div class="herramientas">
+        <center>
+            <section>
+                <p>Figuras</p>
+                <button onclick="herramientaseleccionada('cuadrado')">
+                    <p>cuadrado</p>
+                    <img src="./icons/cuadrado.png" alt="" width="30px" class=""> 
+                </button>
+                <button onclick="herramientaseleccionada('circulo')">
+                    <p>Circulo</p>
+                    <img src="./icons/circulo.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="herramientaseleccionada('rectangulo')">
+                    <p>Rectangulo</p>
+                    <img src="./icons/rectangulo.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="herramientaseleccionada('poligono')">
+                    <p>Poligono</p>
+                    <img src="./icons/poligono.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="herramientaseleccionada('elipse')">
+                    <p>Elipse</p>
+                    <img src="./icons/eclipse.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="herramientaseleccionada('linea')">
+                    <p>Linea</p>
+                    <img src="./icons/linea.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="herramientaseleccionada('lapiz')">
+                    <p>Lapiz</p>
+                    <img src="./icons/lapiz.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="herramientaseleccionada('borrador')">
+                    <p>Borrador</p>
+                    <img src="./icons/borrador.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="tamaño_grosor()">
+                    <p>Grosor</p>
+                    <img src="./icons/grosor.png" alt="" width="30px" class="">
+                </button>
+                <button>
+                    <p>Relleno</p>
+                    <img src="./icons/Relleno.png" alt="" width="30px" class="">
+                </button>
+                <button> 
+                    <p>Color</p>
+                    <input type="color" name="" class="Paleta" id="Paleta" oninput="pintura(this.value)">
+                </button> 
+            </section>
             
-            <button id="Elipse" class="Boton_Seleccion">
-                <img src="img/Elipse.png">
-            </button>
+            <!--botones de los archivos-->
+            <section>
+                <p>Archivo</p>
+                <button onclick="deshacer()">
+                    <p>Deshacer</p>
+                    <img src="./icons/Deshacer.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="rehacer()">
+                    <p>Rehacer</p>
+                    <img src="./icons/Rehacer.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="guardar('guardar')">
+                    <p>Guardar</p>
+                    <img src="./icons/guardar.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="guardarcomo('guardar_como')">
+                    <p>Guardar PNG</p>
+                    <img src="./icons/guardar_como.png" alt="" width="30px" class="">
+                </button>
+                <button id="abrir" onclick="abrir()">
+                    <p>Abrir Archivo</p>
+                    <img src="./icons/abrir.png" alt="" width="30px" class="">
+                    <input type="file" style="display:none" name="ar_dibujo" id="abrir_ar">
+                </button>
+            </section>
+        </center>
+    </div>
 
-            <input type="color" id="Color" value="#000000">
-            <input type="range" id="Grosor" min="1" max="6" value="1">
+    <!--Area de dibujo-->
+    <div class="area_dibujado">
+        <center>
+            <canvas id="canvas" width="800" height="600"></canvas>
+            <canvas id="canvaslimpio" width="800" height="600"></canvas>
+        </center>
+    </div>
 
-            <button id="Relleno" class="Boton_Seleccion">
-                <img src="img/Relleno.png">
-            </button>
+    <!--Capas-->
+    <div class="capas">
+        <center>
+            <!--botones para mover, rotar y escalar la figura de la capa actual-->
+            <section>
+                <p>Transformaciones</p>
+                <button onclick="mover()">
+                    <p>Mover</p>
+                    <img src="./icons/mover.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="rotar()">
+                    <p>Rotar</p>
+                    <img src="./icons/rotar.png" alt="" width="30px" class="">
+                </button>
 
+                <button onclick="escalar()">
+                    <p>Escalar</p>
+                    <img src="./icons/escalar.png" alt="" width="30px" class="">
+                </button>
+            </section>
+            <!--Funcionalidades de acomodo de las capas-->
+            <section>
+                <p>Funcionalidades</p>
+                <button onclick="atras()">
+                    <p>Enviar atras</p>
+                    <img src="./icons/haciaatras.png" alt="" width="30px" class="">
+                </button>
+                <button onclick="adelante()">
+                    <p>Enviar adelante</p>
+                    <img src="./icons/haciaadelante.png" alt="" width="30px" class="">
+                </button>
+            </section>
+        </center>
+    </div>
 
-        </div>
-        
-    <canvas id="Pizarra" class="canvas"> </canvas>
+    <!--Clases de Figuras-->
+    <script src="./Clases/figuras/borrador.js"></script>
+    <script src="./Clases/figuras/circulo.js"></script>
+    <script src="./Clases/figuras/cuadrado.js"></script>
+    <script src="./Clases/figuras/elipse.js"></script>
+    <script src="./Clases/figuras/lapiz.js"></script>
+    <script src="./Clases/figuras/lineas.js"></script>
+    <script src="./Clases/figuras/poligono.js"></script>
+    <script src="./Clases/figuras/rectangulo.js"></script>
+    <script src="./Clases/figuras/relleno.js"></script>
+
+    <!--Clases de Archivos-->
+    <script src="./Clases/archivo/abrir.js"></script>
+    <script src="./Clases/archivo/deshacer.js"></script>
+    <script src="./Clases/archivo/guardar.js"></script>
+    <script src="./Clases/archivo/guardarcomo.js"></script>
+    <script src="./Clases/archivo/rehacer.js"></script>
+
+    <!--Clase Principal-->
+    <script src="./Clases/app.js"></script>
+    
 </body>
 </html>
+<!--Codigo hecho por Sistemas Mario-->
