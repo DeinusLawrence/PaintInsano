@@ -49,10 +49,12 @@ canvas.addEventListener('mousedown', e=>{
     inicialX = x = e.clientX - rect.left;
     inicialY = y = e.clientY - rect.top;
     flag = true;
+
 });
 
 //guarda coordenadas para crear preview
 canvas.addEventListener('mousemove', e=>{
+    
     
     if (flag == true){
         switch(tool){
@@ -127,6 +129,11 @@ canvas.addEventListener('mouseup', e=>{
             capacont++;
             nuevacapa()
             break;
+        case "borrador1":
+            borradorprueba(x,y)
+            capacont++;
+            nuevacapa()
+            break;
     }
 
     SavPosiciones = []
@@ -140,7 +147,8 @@ canvas.addEventListener("click", e=>{
     clicX = e.clientX - rect.left;
     clicY = e.clientY - rect.top;
     if(tool=="borrador"){
-        borrador(clicX, clicY)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxlimpio.clearRect(0, 0, canvas.width, canvas.height);
     } else if (tool == "texto") {
         var texto = prompt("Ingresa el texto:");
         if (texto) {
@@ -182,6 +190,9 @@ function herramientaseleccionada(herramienta) {
         case "texto":
             tool = herramienta
             break;
+        case "borrador1":
+            tool = herramienta
+            break;
     };
 }
 
@@ -202,7 +213,7 @@ function dibujar(x, y) {
     ctx.fillRect(Math.round(x), Math.round(y), grosor, grosor);
     ctx.fill();
     if(flag==false){
-        registrarposicion(x,y) //envia los datos x & y para registrar la posicion
+        registrarposicion(x,y)
         ctxlimpio.beginPath();
         ctxlimpio.fillStyle = color;
         ctxlimpio.fillRect(Math.round(x), Math.round(y), grosor, grosor);
@@ -219,7 +230,7 @@ function dibujarline(x1, y1, x2, y2){
     ctxlimpio.lineTo(x2,y2)
     ctxlimpio.stroke();
     ctxlimpio.closePath();
-    registrarposicion(x1, y1)   //envia los datos x & y para registrar la posicion
+    registrarposicion(x1, y1) 
     registrarposicion(x2, y2)
 }
 

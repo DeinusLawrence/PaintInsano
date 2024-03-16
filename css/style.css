@@ -10,12 +10,12 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: #666666;
+    background: linear-gradient(to bottom right, #ffb6c1, #ffc0cb);
     display: flex;
 }
 
 #canvas{
-    border: 5px solid black;
+    border: 2px solid black;
     background-color: transparent;
     display: flex;
     position: fixed;
@@ -23,23 +23,23 @@ body{
 
 .herramientas{
     width: 250px;
-    height: 600px;
+    height: 615px;
     margin: 0 10px;
-    border: 5px solid black;
+    border: 2px solid black;
     background-color: #fff;
     display: flex;
 }
 
 .capas{
     width: 250px;
-    height: 600px;
+    height: 615px;
     margin: 0 10px;
-    border: 5px solid black;
+    border: 2px solid black;
     background-color: #fff;
     display: flex;
 }
 
 #canvaslimpio{
     background-color: white;
-    border: 5px solid red;
+    border: 2px solid red;
 }
