@@ -141,6 +141,13 @@ canvas.addEventListener("click", e=>{
     clicY = e.clientY - rect.top;
     if(tool=="borrador"){
         borrador(clicX, clicY)
+    } else if (tool == "texto") {
+        var texto = prompt("Ingresa el texto:");
+        if (texto) {
+            insertarTexto(texto, clicX, clicY);
+            capacont++;
+            nuevacapa();
+        }
     }
 });
 
@@ -172,12 +179,15 @@ function herramientaseleccionada(herramienta) {
         case "borrador":
             tool = herramienta
             break;
+        case "texto":
+            tool = herramienta
+            break;
     };
 }
 
 //grosor
 function tamaño_grosor(){
-    grosor=prompt("Dame tu grosor")
+    grosor=prompt("Ingrese Grosor: ")
 }
 
 //color
