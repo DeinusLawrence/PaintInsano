@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paint Nerfeado</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -30,8 +31,13 @@
                     <img src="./icons/guardar.png" alt="" width="30px" class="">
                 </button>
 
-                <button onclick="guardarcomo('guardar_como')">
+                <button onclick="guardarcomo('guardar_PNG')">
                     <p>Guardar PNG</p>
+                    <img src="./icons/guardar_como.png" alt="" width="30px" class="">
+                </button>
+
+                <button onclick="guardarcomo1('guardar_PDF')">
+                    <p>Guardar PDF</p>
                     <img src="./icons/guardar_como.png" alt="" width="30px" class="">
                 </button>
 
@@ -164,6 +170,9 @@
         </center>
     </div>
 
+    <!--Clase Principal-->
+    <script src="./Clases/app.js"></script>
+
     <!--Clases de Figuras-->
     <script src="./Clases/figuras/borrador.js"></script>
     <script src="./Clases/figuras/circulo.js"></script>
@@ -183,9 +192,6 @@
     <script src="./Clases/archivo/guardar.js"></script>
     <script src="./Clases/archivo/guardarcomo.js"></script>
     <script src="./Clases/archivo/rehacer.js"></script>
-
-    <!--Clase Principal-->
-    <script src="./Clases/app.js"></script>
     
 </body>
 </html>
