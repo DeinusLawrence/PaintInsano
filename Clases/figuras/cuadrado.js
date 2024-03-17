@@ -1,5 +1,3 @@
-//funcion para hacer cuadrado usando el punto medio
-//reutilizando las funciones de linea
 function cuadrado(x0, y0, x1, y1){
     var DX=0, DY=0;
 

@@ -60,6 +60,9 @@ function redibujar(capas){
                     dibujarline(inicialX, inicialY, finalX, finalY)
                 })
                 break;
+            case "trapecio":
+                trapecio(inicialX, inicialY, finalX, finalY)
+                break;
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });

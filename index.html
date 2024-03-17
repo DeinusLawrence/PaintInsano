@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <!--Botones de herramientas-->
-    <div class="herramientas">
+    <!--Capas-->
+    <div class="capas">
         <center>
             <!--botones de los archivos-->
             <section>
@@ -83,8 +83,8 @@
         </center>
     </div>
 
-    <!--Capas-->
-    <div class="capas">
+    <!--herramientas-->
+    <div class="herramientas">
         <center>
             <!--botones para mover, rotar y escalar la figura de la capa actual-->
             <section>
@@ -118,6 +118,11 @@
                 <button onclick="herramientaseleccionada('rectangulo')">
                     <p>Rectangulo</p>
                     <img src="./icons/rectangulo.png" alt="" width="30px" class="">
+                </button>
+
+                <button onclick="herramientaseleccionada('trapecio')">
+                    <p>Trapecio</p>
+                    <img src="./icons/trapecio.png" alt="" width="30px" class="">
                 </button>
 
                 <button onclick="herramientaseleccionada('poligono')">
@@ -170,6 +175,7 @@
     <script src="./Clases/figuras/rectangulo.js"></script>
     <script src="./Clases/figuras/relleno.js"></script>
     <script src="./Clases/figuras/texto.js"></script>
+    <script src="./Clases/figuras/trapecio.js"></script>
 
     <!--Clases de Archivos-->
     <script src="./Clases/archivo/abrir.js"></script>

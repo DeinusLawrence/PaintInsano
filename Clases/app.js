@@ -54,8 +54,7 @@ canvas.addEventListener('mousedown', e=>{
 
 //guarda coordenadas para crear preview
 canvas.addEventListener('mousemove', e=>{
-    
-    
+
     if (flag == true){
         switch(tool){
             case "cuadrado":
@@ -80,6 +79,10 @@ canvas.addEventListener('mousemove', e=>{
                 break;
             case "rectangulo":
                 previewrectangulo(inicialX, inicialY, e.clientX - rect.left, e.clientY - rect.top)
+                break;
+            case "trapecio":
+                previewtrapecio(inicialX, inicialY, e.clientX - rect.left, e.clientY - rect.top)
+                break;
         }
     }   
     
@@ -134,6 +137,11 @@ canvas.addEventListener('mouseup', e=>{
             capacont++;
             nuevacapa()
             break;
+        case "trapecio":
+            trapecio(inicialX, inicialY, finalX, finalY)
+            capacont++;
+            nuevacapa()
+            break;
     }
 
     SavPosiciones = []
@@ -153,13 +161,11 @@ canvas.addEventListener("click", e=>{
         var texto = prompt("Ingresa el texto:");
         if (texto) {
             insertarTexto(texto, clicX, clicY);
-            capacont++;
-            nuevacapa();
         }
     }
 });
 
-//seleccion de herramienta (en mi logica se elige la herramienta de dibujar antes de dibujar)
+//seleccion de herramienta
 function herramientaseleccionada(herramienta) {
     switch (herramienta) {
         case "cuadrado":
@@ -191,6 +197,9 @@ function herramientaseleccionada(herramienta) {
             tool = herramienta
             break;
         case "borrador1":
+            tool = herramienta
+            break;
+        case "trapecio":
             tool = herramienta
             break;
     };

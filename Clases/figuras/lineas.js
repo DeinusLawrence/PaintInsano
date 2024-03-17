@@ -27,3 +27,4 @@ function previewlinea(x0, y0, x1, y1){
     ctx.beginPath();
     linea(x0, y0, x1, y1);
   }
+
